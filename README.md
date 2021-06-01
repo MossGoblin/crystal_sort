@@ -1,4 +1,4 @@
-# crystal_sort
+# crystal sort
 
 Sorting algorithm, using iterative swapping.
 
@@ -14,7 +14,7 @@ As the number of iteration is fixed, the running time is the same for all cases 
 
 Comparison was made with *insertion sort*:
 
-- *crystal sort* has lower iteration count - half the length; *insertion sort* has length - 1) iterations.
+- *crystal sort* has lower iteration count - half the length; *insertion sort* has (length - 1) iterations.
 
 - the number of value comparisons and element rearrangements of *insertion sort* is slightly lower - almost exactly 90% of the respective numbers for *crystal sort*.
 
@@ -83,8 +83,6 @@ Outer iteration 1: offset = 0
   * [**1**, 5, 4, 3, 6, 5, **8**]
     The first element is the smallest (1) and the last element is the largest (8)
 
-
-
 **Second inner iteration**
 Offset = 1; The subset that will be iterated upon is:
 [5, 4, 3, 6, 5]
@@ -119,3 +117,15 @@ One more inner interaction sorts the remaining [5, 4, 5] in the center to [4, 5,
 The final array is ordered:
 
 * [1, 3, 4, 5, 5, 6, 8]
+
+### Usage
+
+```python
+import crystal_sort
+
+array = [2.3, -3.5, 77.14, 77.1, -1, 0]
+print(crystal_sort.sort(array))
+```
+
+Output:
+[-3.5, -1, 0, 2.3, 77.1, 77.14]

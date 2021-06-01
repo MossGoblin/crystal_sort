@@ -2,7 +2,7 @@ from copy import deepcopy
 import math
 
 
-def crystal_sort(incoming_bucket):
+def sort(incoming_bucket):
 
     def swap(bucket, index_one, index_two):
         temp = bucket[index_one]
