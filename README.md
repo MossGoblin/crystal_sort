@@ -8,6 +8,10 @@ Sorting algorithm, using iterative swapping.
 
 * works with both integers and floating point numbers
 
+### Pros/Cons
+***Pros***: short code; very easy to understand and (in my opinion) elegantly simple
+***Cons***: multiple iterations, even in case of ordered starting array; not especially fast
+
 ### Time Complexity:
 
 The general complexity of *crystal sort* is similar to *insertion sort*, I presume the Big-O value of *crystal sort* is the same - **O(n^2)**
