@@ -86,7 +86,9 @@ Outer iteration 1: offset = 0
 
 **Second inner iteration**
 
-Offset = 1; The subset that will be iterated upon is:
+Offset = 1;
+
+The subset that will be iterated upon is:
 
 [5, 4, 3, 6, 5]
 
@@ -132,6 +134,8 @@ print(crystal_sort.sort(array1))
 print(crystal_sort.sort(array2))
 ```
 
+```
 Output:
 [1, 3, 4, 5, 5, 6, 8]
 [-3.5, -1, 0, 2.3, 77.1, 77.14]
+```
