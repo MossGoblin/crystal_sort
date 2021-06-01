@@ -10,6 +10,8 @@ Sorting algorithm, using iterative swapping.
 
 ### Time Complexity:
 
+The general complexity of *crystal sort* is similar to *insertion sort*, I presume the Big-O value of *crystal sort* is the same - **O(n^2)**
+
 As the number of iteration is fixed, the running time is the same for all cases (worst case, slightly randomized, ordered, reversed).
 
 Comparison was made with *insertion sort*:
@@ -17,8 +19,6 @@ Comparison was made with *insertion sort*:
 - *crystal sort* has lower iteration count - half the length; *insertion sort* has (length - 1) iterations.
 
 - the number of value comparisons and element rearrangements of *insertion sort* is slightly lower - almost exactly 90% of the respective numbers for *crystal sort*.
-
-- As the general complexity of *crystal sort* is similar to *insertion sort*, I presume the Big-O value of *crystal sort* is the same - O(n^2)
 
 ### Method
 
@@ -81,10 +81,13 @@ Outer iteration 1: offset = 0
 * **The first iteration yields the following array:**
   
   * [**1**, 5, 4, 3, 6, 5, **8**]
+
     The first element is the smallest (1) and the last element is the largest (8)
 
 **Second inner iteration**
+
 Offset = 1; The subset that will be iterated upon is:
+
 [5, 4, 3, 6, 5]
 
 * 1st seed is 5; no swaps.
@@ -123,9 +126,12 @@ The final array is ordered:
 ```python
 import crystal_sort
 
-array = [2.3, -3.5, 77.14, 77.1, -1, 0]
-print(crystal_sort.sort(array))
+array1 = [5, 4, 1, 3, 8, 5, 6]
+array2 = [2.3, -3.5, 77.14, 77.1, -1, 0]
+print(crystal_sort.sort(array1))
+print(crystal_sort.sort(array2))
 ```
 
 Output:
+[1, 3, 4, 5, 5, 6, 8]
 [-3.5, -1, 0, 2.3, 77.1, 77.14]
