@@ -9,7 +9,9 @@ Sorting algorithm, using iterative swapping.
 * works with both integers and floating point numbers
 
 ### Pros/Cons
+
 ***Pros***: short code; very easy to understand and (in my opinion) elegantly simple
+
 ***Cons***: multiple iterations, even in case of ordered starting array; not especially fast
 
 ### Time Complexity:
