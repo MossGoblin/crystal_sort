@@ -2,7 +2,7 @@
 
 Built on top of the basic crystal sort algorithm.
 
-The inner iteration is replaced by another step.
+An additional step is added between the inner iteration of crystal sort.
 
 * [Method](#method)
 * [Example](#example)
@@ -14,23 +14,23 @@ The process of iterating is called bracketing. Each iteration takes a subset of 
 
 The primary pass of the iteration finds the lowest and higherst values of the subset and places them at the first and last indices of the subset (same as outer iteration of crystal sort).
 
-A remainder is defined as the subset minus the first and last element.
+The bracket consists of the first element (lowest value), the last element (highest value) and the remainder between them.
 
-A secondary pass is made over the remainder. It returns atuple of the following:
+A secondary pass is made over the remainder. It returns a tuple of the following:
 
 - all the elements, equal to the lowest element of the parent subset.
 - all elements not equal to the lowest or highest element in the parent subset.
 - all the elements, equal to the highest element of the parent subset.
 
-After the secondary pass the returned values are combined with the lowest and highest elements in the parent subset.
+After the secondary pass the returned values are combined with the lowest and highest elements in the bracket.
 
 The iteration returns the following tuple:
 
-- lower bracket: The lowest element of the subset and all elements with the same value
+- lower bracket set: The lowest element of the subset and all elements with the same value
 - remainder: All elements that differ from the lowest and the highest element
-- higher bracket: The highest element of the subset and all elements with the same value
+- higher bracket set: The highest element of the subset and all elements with the same value
 
-After the iteration the lower bracket and teh higher bracket are added to the brackets from previous iterations.
+After the iteration the lower bracket set and the higher bracket set are added to the bracket sets from previous iterations.
 
 The remainder, if any, goes for another iteration.
 
@@ -102,7 +102,7 @@ In the examples below it can be seen that if the maximum size of the elements is
 If the size of the array is greater than the possible size of the elements, the pigeon hole performs much better.
 
 ```
-# size of array equal to elements possible size
+# size of array equal to elements possible size - 10000
 10000 runs
 element values: 1..10000
 random values
@@ -111,6 +111,14 @@ time: 0:00:10.357593 / 0:00:16.832661 (162.52 %)
 passes: 25000000 / 31441982 (125.77 %)
 comparisons: 50054091 / 45400197 (90.70 %)
 swaps*: 6140815 / 3581734 (58.33 %)
+
+# size of array equal to elements possible size - 100000
+100000 runs: 1..100000
+random
+time: 0:19:46.892167 / 0:29:56.618772 (151.37 %)
+passes: 2500000000 / 3155499778 (126.22 %)
+comparisons: 5001418191 / 4555348906 (91.08 %)
+swaps: 612873963 / 357200768 (58.28 %)
 
 # size of array larger than elements possible size
 10000 runs: 1..1000
