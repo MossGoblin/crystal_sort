@@ -1,6 +1,13 @@
 # crystal sort
 
-Sorting algorithm, using iterative swapping.
+**Sorting algorithm, using iterative swapping.**
+
+* [Features](#features)
+* [Pros/Cons](#proscons)
+* [Time complexity](#complexity)
+* [Method](#method)
+* [Example](#example)
+* [Usage](#usage)
 
 ### Features:
 
@@ -14,7 +21,7 @@ Sorting algorithm, using iterative swapping.
 
 ***Cons***: multiple iterations, even in case of ordered starting array; not especially fast
 
-### Time Complexity:
+### Time complexity:
 
 The general complexity of *crystal sort* is similar to *insertion sort*, I presume the Big-O value of *crystal sort* is the same - **O(n^2)**
 
@@ -48,7 +55,7 @@ In each outer iteration increasingly smaller subsets of the array are processed.
 
 The sorting algorithm is called **crystal sort**, because the way the set gets ordered from the ends towards the middle reminiscent of crystalization. This is also the reason the element that is being currently compared is called **seed**.
 
-### example
+### Example
 
 array = [5, 4, 1, 3, 8, 5, 6]
 
@@ -87,7 +94,7 @@ Outer iteration 1: offset = 0
 * **The first iteration yields the following array:**
   
   * [**1**, 5, 4, 3, 6, 5, **8**]
-
+    
     The first element is the smallest (1) and the last element is the largest (8)
 
 **Second inner iteration**
