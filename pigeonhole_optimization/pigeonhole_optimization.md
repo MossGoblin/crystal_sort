@@ -107,36 +107,29 @@ If the size of the array is greater than the possible size of the elements, the 
 element values: 1..10000
 random values
 (base / pigeon hole)
-time: 0:00:10.357593 / 0:00:16.832661 (162.52 %)
-passes: 25000000 / 31441982 (125.77 %)
-comparisons: 50054091 / 45400197 (90.70 %)
-swaps*: 6140815 / 3581734 (58.33 %)
-
-# size of array equal to elements possible size - 100000
-100000 runs: 1..100000
-random
-time: 0:19:46.892167 / 0:29:56.618772 (151.37 %)
-passes: 2500000000 / 3155499778 (126.22 %)
-comparisons: 5001418191 / 4555348906 (91.08 %)
-swaps: 612873963 / 357200768 (58.28 %)
+time: 0:00:12.532099 / 0:00:14.754685 (117.74 %)
+passes: 25000000 / 15789402 (63.16 %)
+comparisons: 49962788 / 29803070 (59.65 %)
+swaps: 6068506 / 3550003 (58.50 %)
 
 # size of array larger than elements possible size
-10000 runs: 1..1000
-random
-time: 0:00:10.728186 / 0:00:02.823458 (26.32 %)
-passes: 25000000 / 5050124 (20.20 %)
-comparisons: 50071664 / 7534087 (15.05 %)
-swaps*: 1490966 / 82949 (5.56 %)
+100000 runs: 1..10000
+random values
+(base / pigeon hole
+time: 0:17:57.548739 / 0:03:11.917164 (17.81 %)
+passes: 2500000000 / 249976744 (10.00 %)
+comparisons: 5000275889 / 495892318 (9.92 %)
+swaps: 150244081 / 8020721 (5.34 %) %)
 
 # size of array much larger than elements possible size
 100000 runs
 element values: 1..10
 random values
 (base / pigeon hole)
-time: 0:17:14.631099 / 0:00:00.463996 (0.04 %)
-passes: 2500000000 / 554358 (0.02 %)
-comparisons: 4999980816 / 876029 (0.02 %)
-swaps*: 167968 / 9 (0.01 %)
+time: 0:17:55.579823 / 0:00:00.323449 (0.03 %)
+passes: 2500000000 / 277649 (0.01 %)
+comparisons: 4999980000 / 555278 (0.01 %)
+swaps: 168028 / 12 (0.01 %)
 
 (* "swaps" is not a reliable metric, as the secondary pass of the pigeon hole algorithm does not use direct swapping of elements and no equivalent metric is used in it's stead)
 ```

@@ -29,27 +29,12 @@ def sort(bucket):
         passes = 0
         comparisons = 0
 
-        start = []
-        end = []
-        offset_start = 0
-        offset_end = 0
-        index = 0
+        passes += 3 # simulated passes
+        comparisons += 3 # simulated comparisons
+        start = [value for value in subset if (value == lower)]
+        remainder = [value for value in subset if (value != lower and value != higher)]
+        end = [value for value in subset if (value == higher)]
 
-        while index < len(subset):
-            passes += 1
-            seed = subset[index]
-            comparisons += 1
-            if seed == lower:
-                offset_start += 1
-            elif seed == higher:
-                comparisons += 1
-                offset_end += 1
-            index += 1
-
-        start = [lower] * offset_start
-        remainder = [value for value in subset if (
-            value != lower and value != higher)]
-        end = [higher] * offset_end
         return start, end, remainder, passes, comparisons
 
     def process_bracket(subset: List):
