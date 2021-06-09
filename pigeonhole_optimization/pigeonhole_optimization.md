@@ -107,32 +107,36 @@ If the size of the array is greater than the possible size of the elements, the 
 element values: 1..10000
 random values
 (base / pigeon hole)
-time: 0:00:12.532099 / 0:00:14.754685 (117.74 %)
-passes: 25000000 / 15789402 (63.16 %)
-comparisons: 49962788 / 29803070 (59.65 %)
-swaps: 6068506 / 3550003 (58.50 %)
+time: 0:00:13.068543 / 0:00:13.262321 (101.48 %)
+passes: 25000000 / 15661947 (62.65 %)
+(comparisons: 50003845 / 29529205 (59.05 %))
+(swaps: 6115189 / 3530025 (57.73 %))
 
 # size of array larger than elements possible size
 100000 runs: 1..10000
 random values
 (base / pigeon hole
-time: 0:17:57.548739 / 0:03:11.917164 (17.81 %)
-passes: 2500000000 / 249976744 (10.00 %)
-comparisons: 5000275889 / 495892318 (9.92 %)
-swaps: 150244081 / 8020721 (5.34 %) %)
+time: 0:21:01.428151 / 0:03:19.442263 (15.81 %)
+passes: 2500000000 / 249914185 (10.00 %)
+(comparisons: 5000985218 / 495735561 (9.91 %))
+(swaps: 150077416 / 8062430 (5.37 %))
 
 # size of array much larger than elements possible size
 100000 runs
 element values: 1..10
 random values
 (base / pigeon hole)
-time: 0:17:55.579823 / 0:00:00.323449 (0.03 %)
-passes: 2500000000 / 277649 (0.01 %)
-comparisons: 4999980000 / 555278 (0.01 %)
-swaps: 168028 / 12 (0.01 %)
-
-(* "swaps" is not a reliable metric, as the secondary pass of the pigeon hole algorithm does not use direct swapping of elements and no equivalent metric is used in it's stead)
+time: 0:19:09.614440 / 0:00:00.355971 (0.03 %)
+passes: 2500000000 / 278516 (0.01 %)
+(comparisons: 4999979699 / 557018 (0.01 %))
+(swaps: 167751 / 9 (0.01 %))
 ```
+
+Swaps and Comparisons are not reliable metrics.
+* Comparisons measures the number of 'if' statements, swaps measures direct swaps of two elements in an array.
+* The pigeon hole version measures it's primary iterations the same way as the base version does. However the secondary pass does not use ifs nor swaps, so there are no values for those from the secondary passes.
+* Passes remains more or less sable as a metric.
+* Total time is, of course, fine.
 
 ### Possible development
 

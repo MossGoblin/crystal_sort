@@ -26,16 +26,11 @@ def sort(bucket):
         return subset, passes, comparisons, swaps
 
     def secondary_pass(lower: int, higher: int, subset: List):
-        passes = 0
-        comparisons = 0
-
-        passes += 3 # simulated passes
-        comparisons += 3 # simulated comparisons
         start = [value for value in subset if (value == lower)]
         remainder = [value for value in subset if (value != lower and value != higher)]
         end = [value for value in subset if (value == higher)]
 
-        return start, end, remainder, passes, comparisons
+        return start, end, remainder
 
     def process_bracket(subset: List):
         subset, passes_01, comparisons_01, swaps_01 = primary_pass(subset)
@@ -44,18 +39,19 @@ def sort(bucket):
         subsubset = subset[1: -1]
 
         if len(subset) > 1:
-            sorted_start, sorted_end, remainder, passes_02, comparisons_02 = secondary_pass(
+            sorted_start, sorted_end, remainder = secondary_pass(
                 lower, higher, subsubset)
         else:
             remainder = subset
 
-        return [lower] + sorted_start, [higher] + sorted_end, remainder, passes_01 + passes_02, comparisons_01 + comparisons_02, swaps_01
+        return [lower] + sorted_start, [higher] + sorted_end, remainder, passes_01, comparisons_01, swaps_01
 
     remainder = deepcopy(bucket)
     sorted_start = []
     sorted_end = []
 
     while len(remainder) > 1:
+        passes += 1
         sorted_subset_start, sorted_subset_end, remainder, new_passes, new_comparisons, new_swaps = process_bracket(
             remainder)
         sorted_start += sorted_subset_start
