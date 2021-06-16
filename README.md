@@ -19,31 +19,31 @@
 
 ### Naming
 
-The sorting algorithm is called **crystal sort**, because the way the set gets ordered from the ends towards the middle reminiscent of crystalization. This is also the reason the element that is being currently compared is called **seed**.
+The sorting algorithm is called **crystal sort**, because the way the set gets ordered from the ends towards the middle is reminiscent of crystalization. 
 
 The secondary operation is called '**pigeon hole**' optimization as the algorithm takes advantage of the pigeon hole principle - if the range of possible values for the elements is smaller than the size of the array, then duplicate values are guaranteed. (*see Secondary operation*)
 
 ### Pros/Cons
 
-***Pros***: short code; very easy to understand and (in my opinion) elegantly simple
+***Pros***: easy to understand and (in my opinion) elegantly simple
 
 ***Cons***: multiple iterations, even in case of ordered starting array; not especially fast
 
-### Time complexity:
+### Time complexity
 
-The number of iterations depends on the size of the array, which makes the Big-O value of *crystal sort*  ****O(n^2)**
+Each element is iterated more than once. The number of iterations depends on the size of the array, which makes the Big-O value of *crystal sort*  **O(n^2)**
 
 ### Method
 
-The algorithm uses one primary iteration and an optional secondary one.
+The algorithm uses one primary iteration and an optional secondary operation.
 
 #### Primary iteration
 
-The inner iteration is of decreasing length.
+The primary iteration is of decreasing length.
 
 In each primary iteration increasingly smaller subsets of the array are processed. Each primary iteration results in two elements placed in their proper place.
 
-* A subset of the array is being iterated upon. Each element of the subset is compared with the first and last element and swapped with one of them.
+* A subset of the array is being iterated upon. In the first pass the subset is the whoe starting array. Each element of the subset is compared with the first and last element and swapped with one of them.
 
 * At the end of the primary iteration the smallest element is always at the begining of the subset, the largest is always at the end of the subset.
   
@@ -53,7 +53,7 @@ In each primary iteration increasingly smaller subsets of the array are processe
 
 * The sort() method has a *duplicates* flag that denotes whether the secondary operation is to be applied.
 
-* **If** the flag is Falsethe new subset is sent for another primary iteration.
+* **If** the flag is False, the new subset is sent for another primary iteration.
 
 * **If** the flag is True, the subset is sent for a secondary operation.
 
@@ -62,9 +62,10 @@ In each primary iteration increasingly smaller subsets of the array are processe
 * This operation is called *pigeonhole optimization*
 
 * The secondary operation takes 3 arguments: the smallest and largest values, determined by the primary iteration and the new subset.
-* This subset is split into three parts - an array of all elements (*lower_addition*), equal to the passed low value, an array of all elements, equal to the passed high value (*upper_addition*) and an array, containing the remaining values (*remainder*).
 
-* The *lower_addition* array is added to the end of the *lower_ordered_set* and the *upper_addition* is added to the end of the *upper_ordered_set*.
+* The subset is split into three parts - an array of all elements, equal to the passed low value (*lower_addition*), an array of all elements, equal to the passed high value (*upper_addition*) and an array, containing the remaining values (*remainder*).
+
+* The *lower_addition* anmd *upper_addition* are crystalized - the *lower_addition* array is added to the end of the *lower_ordered_set* and the *upper_addition* is added to the end of the *upper_ordered_set*.
 
 * The remainder is sent as a new subset for a primary iteration.
 
@@ -72,13 +73,13 @@ In each primary iteration increasingly smaller subsets of the array are processe
 
 ### Secondary iteration consideration
 
-If the maximum range of values in the array is smaller than the number of values, then it is certain that the array contains duplicate values. The secondary iteration extracts all values, equal to the smallest and largest values found by each primary iteration. The more duplicate values the array contains, the more work is done by the secondary iteration. This means less primary iterations are performed and in in cases when the possible value range is much smaller than the size of the array, the algorithm performes significantly better.
+If the maximum range of values in the array is smaller than the size of the array, then it is certain that the array contains duplicate values. The secondary iteration extracts all values, equal to the smallest and largest values found by each primary iteration. The more duplicate values the array contains, the more work is done by the secondary operation. This means less primary iterations are performed and in cases when the possible value range is much smaller than the size of the array, the algorithm performes significantly better.
 
-## Use of secondary operation
+### Use of secondary operation
 
 The econdary operation is disabled by default. It should be used when duplicate values are known to be prominent or expected to be prominent in the array.
 
-In case of random or arbitraty values, a good rul of thumb is to enable set the pigeonhole flag to True is the range of values for the array elements is one or more orders of magnitude smaller than the size of the array.
+In case of random or arbitraty values, a good rule of thumb is to set the *duplicates* flag to True if the range of values for the array elements is one or more orders of magnitude smaller than the size of the array.
 
 ### Comparison between modes
 
