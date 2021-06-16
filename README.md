@@ -11,7 +11,7 @@
 
 ### Features:
 
-* the algorithm always makes a fixed number of passes over the array, the number being equal to half the length of the array
+* the maximum number of passes that the algorithm makes equals half the length of the array
 
 * works with both integers and floating point numbers
 
