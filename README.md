@@ -3,10 +3,10 @@
 **Sorting algorithm, using iterative swapping.**
 
 * [Features](#features)
+* [Naming](#naming)
 * [Pros/Cons](#proscons)
 * [Time complexity](#complexity)
 * [Method](#method)
-* [Example](#example)
 * [Usage](#usage)
 
 ### Features:
@@ -14,6 +14,14 @@
 * the algorithm always makes a fixed number of passes over the array, the number being equal to half the length of the array
 
 * works with both integers and floating point numbers
+
+* there is an optional second operation, which can speed up the sort for array with certain properties
+
+### Naming
+
+The sorting algorithm is called **crystal sort**, because the way the set gets ordered from the ends towards the middle reminiscent of crystalization. This is also the reason the element that is being currently compared is called **seed**.
+
+The secondary operation is called '**pigeon hole**' optimization as the algorithm takes advantage of the pigeon hole principle - if the range of possible values for the elements is smaller than the size of the array, then duplicate values are guaranteed. (*see Secondary operation*)
 
 ### Pros/Cons
 
@@ -23,118 +31,85 @@
 
 ### Time complexity:
 
-The general complexity of *crystal sort* is similar to *insertion sort*, I presume the Big-O value of *crystal sort* is the same - **O(n^2)**
-
-As the number of iteration is fixed, the running time is the same for all cases (worst case, slightly randomized, ordered, reversed).
-
-Comparison was made with *insertion sort*:
-
-- *crystal sort* has lower iteration count - half the length; *insertion sort* has (length - 1) iterations.
-
-- the number of value comparisons and element rearrangements of *insertion sort* is slightly lower - almost exactly 90% of the respective numbers for *crystal sort*.
+The number of iterations depends on the size of the array, which makes the Big-O value of *crystal sort*  ****O(n^2)**
 
 ### Method
 
-The algorithm uses two nested iterations - the outer one iterates a number of times equal to half the length of the array. The inner iteration is of decreasing length.
+The algorithm uses one primary iteration and an optional secondary one.
 
-In each outer iteration increasingly smaller subsets of the array are processed. Each outer iteration results in two elements placed in their proper place.
+#### Primary iteration
 
-* Outer iteration - a number of inner iterations equal to half the length of the array.
+The inner iteration is of decreasing length.
 
-* An offset is defined, equal to the index of the outer iteration (0, 1, 2...).
+In each primary iteration increasingly smaller subsets of the array are processed. Each primary iteration results in two elements placed in their proper place.
 
-* Before each inner iteration, the offset is applied. The subset that the inner iteration will be performed on, is produced by shrinking the previous subset at each end by a number of elements equal to the current offset.
-- In the first inner iteration the offset is 0, so the iteration is performed over the whole array.
+* A subset of the array is being iterated upon. Each element of the subset is compared with the first and last element and swapped with one of them.
 
-- Inner iteration - in turn each element of the array is selected as 'seed'. The seed is compared to the last element of the subset and swapped with it, if the seed is strictly higher. If not - it is compared to the first element of the subset and swapped with it, if the seed is strictly lower. When the seed is the first element of the subset, the second comparison does not yield result, as the algorithm compares an element with itself.
-
-- *At the end of thе first iteration the first element of the set is guaranteed to be the smallest, and the last element is guaranteed to be the largest.*
-* After the inner iteration, the second inner iteration is performed (outer iteration count + 1); the offset is increased and the resulting subset is iterated over.
-
-* The offset increases until it reaches half the length of the full set. At this point the full array can be seen as a series of element pairs, bracketing each other. The outermost pair contains the smallest and the largest elements. The second pair (indices 1 and -2) contains the second smallest and second largest elements and so on.
-
-The sorting algorithm is called **crystal sort**, because the way the set gets ordered from the ends towards the middle reminiscent of crystalization. This is also the reason the element that is being currently compared is called **seed**.
-
-### Example
-
-array = [5, 4, 1, 3, 8, 5, 6]
-
-Outer iteration 1: offset = 0
-
-**First inner iteration** - over the whole array
-
-* the first seed is at index 0 and has a value of 5
+* At the end of the primary iteration the smallest element is always at the begining of the subset, the largest is always at the end of the subset.
   
-  * 5 is not larger than the last element and not smaller than itself, so no swaps are performed.
+  *At the end of thе first iteration the first element of the set is guaranteed to be the smallest, and the last element is guaranteed to be the largest.*
 
-* the second seed is at index 1 and has a value of 4
-  
-  * 4 is not larger than 6 (last element); 4 is smaller than the first element, so they are swapped.
-  
-  * [**5**, **4**, 1, 3, 8, 5, 6]
-  
-  * [**4**, **5**, 1, 3, 8, 5, 6]
+* The first and the last element of the previous subset are *crystalized* - the first element is added to the end of a *lower_ordered_set* array, and the last element is added to an *upper_ordered_set*. Then they are removed from the subset, forming a new subset.
 
-* the third seed is 1; it is smaller than the first element and gets swapped with it:
-  
-  * [**4**, 5, **1**, 3, 8, 5, 6]
-  * [**1**, 5, **4**, 3, 8, 5, 6]
+* The sort() method has a *duplicates* flag that denotes whether the secondary operation is to be applied.
 
-* 4th seed = 3; lower than the last element and larger than the first, so it is not swapped.
+* **If** the flag is Falsethe new subset is sent for another primary iteration.
 
-* 5th seed = 8; it is higher than the last element, so they are swapped:
-  
-  * [1, 5, 4, 3, **8**, 5, **6**]
-  * [1, 5, 4, 3, **6**, 5, **8**]
+* **If** the flag is True, the subset is sent for a secondary operation.
 
-* 6th seed = 5; between the first and last element, so no swaps.
+* #### Secondary oprtation (optional)
 
-* 7th seed = 8; no swaps.
+* This operation is called *pigeonhole optimization*
 
-* **The first iteration yields the following array:**
-  
-  * [**1**, 5, 4, 3, 6, 5, **8**]
-    
-    The first element is the smallest (1) and the last element is the largest (8)
+* The secondary operation takes 3 arguments: the smallest and largest values, determined by the primary iteration and the new subset.
+* This subset is split into three parts - an array of all elements (*lower_addition*), equal to the passed low value, an array of all elements, equal to the passed high value (*upper_addition*) and an array, containing the remaining values (*remainder*).
 
-**Second inner iteration**
+* The *lower_addition* array is added to the end of the *lower_ordered_set* and the *upper_addition* is added to the end of the *upper_ordered_set*.
 
-Offset = 1;
+* The remainder is sent as a new subset for a primary iteration.
 
-The subset that will be iterated upon is:
+* After each primary (and optional secondary) iteration the lower and upper ordered sets grow, until the remaining subset contains either 0 elements, 1 element or only duplicate elements.
 
-[5, 4, 3, 6, 5]
+### Secondary iteration consideration
 
-* 1st seed is 5; no swaps.
+If the maximum range of values in the array is smaller than the number of values, then it is certain that the array contains duplicate values. The secondary iteration extracts all values, equal to the smallest and largest values found by each primary iteration. The more duplicate values the array contains, the more work is done by the secondary iteration. This means less primary iterations are performed and in in cases when the possible value range is much smaller than the size of the array, the algorithm performes significantly better.
 
-* 2nd seed = 4; smaller than the first element; swaps with it.
-  
-  * [**5**, **4**, 3, 6, 5]
-  * [**4**, **5**, 3, 6, 5]
+## Use of secondary operation
 
-* 3rd seed = 3; smaller than the first element; swaps with it.
-  
-  * [**4**, 5, **3**, 6, 5]
-  * [**3**, 5, **4**, 6, 5]
+The econdary operation is disabled by default. It should be used when duplicate values are known to be prominent or expected to be prominent in the array.
 
-* 4th seed = 6; larger than the last element; swaps with it.
-  
-  * [3, 5, 4, **6**, **5**]
-  * [3, 5, 4, **5**, **6**]
+In case of random or arbitraty values, a good rul of thumb is to enable set the pigeonhole flag to True is the range of values for the array elements is one or more orders of magnitude smaller than the size of the array.
 
-* 5th seed = 6; no swaps.
+### Comparison between modes
 
-At the end of the second iteration the first element of the subset is the smallest in it and the last is the largest.
-[**3**, 5, 4, 5, **6**]
+Four examples of sorting of random a array with different value magnitudes, comparing the performance of the algorithm with default flag (False) and True.
 
-The first two elements of the full array are the smallest, increasing with the index; the last two are the largest, also increasing with the index.
+```python
+size:            10000
+value mag:       10000
+(values: 0..10000)
+without / with pigeonhole optimization 
+time: 0:00:02.776571 / 0:00:03.249534 (117.03 %)
 
-* [**1**, **3**, 5, 4, 5, **6**, **8**]
+size:            10000
+value mag:        1000
+(values: 0..1000)
+without / with pigeonhole optimization 
+time: 0:00:02.390282 / 0:00:00.487199 (20.38 %)
 
-One more inner interaction sorts the remaining [5, 4, 5] in the center to [4, 5, 5]
-The final array is ordered:
+size:            10000
+value mag:         100
+(values: 0..100)
+without / with pigeonhole optimization 
+time: 0:00:02.251711 / 0:00:00.054999 (2.44 %)
 
-* [1, 3, 4, 5, 5, 6, 8]
+size:            10000
+value mag:          10
+(values: 0..10)
+without / with pigeonhole optimization 
+time: 0:00:01.896952 / 0:00:00.010999 (0.58 %)
+0:03.249534 (117.03 %)
+```
 
 ### Usage
 
@@ -143,12 +118,20 @@ import crystal_sort
 
 array1 = [5, 4, 1, 3, 8, 5, 6]
 array2 = [2.3, -3.5, 77.14, 77.1, -1, 0]
+array3 = [0, 0, 1, 2, 6, 6, 9, 8, 8, 7, 7, 7]
+
 print(crystal_sort.sort(array1))
+
 print(crystal_sort.sort(array2))
+
+# the use of True flag in here is only as example;
+# for this particular test array the default (False) is recommended
+print(crystal_sort.sort(array3, True))
 ```
 
 ```
 Output:
 [1, 3, 4, 5, 5, 6, 8]
 [-3.5, -1, 0, 2.3, 77.1, 77.14]
+[0, 0, 1, 2, 6, 6, 7, 7, 7, 8, 8, 9]
 ```
