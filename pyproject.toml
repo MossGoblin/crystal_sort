@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "crystal_sort"
+version = "0.1.0"
+description = "A sorting algorithm, designed for collections of numbers, containing multiple duplicate values"
+authors = ["Angel Slavchev <hugolabs@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/MossGoblin/crystal_sort"
+repository = "https://github.com/MossGoblin/crystal_sort"
+keywords = ["sorting", "sort"]
+include = [
+    "LICENSE",
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
