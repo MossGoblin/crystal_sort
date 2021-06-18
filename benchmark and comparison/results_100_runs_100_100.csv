@@ -1,8 +1,0 @@
-,time (microsecods)
-crystal_sort,23203.97
-crystal_sort_pgh,460.3
-heap_sort,559.39
-insertion_sort,106.19
-merge_sort,1889.71
-quick_sort,1329.84
-selection_sort,23963.37
