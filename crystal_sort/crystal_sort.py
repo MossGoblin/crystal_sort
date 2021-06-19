@@ -50,7 +50,7 @@ def sort(incoming_bucket, duplicates=True):
             else:
                 remainder.append(seed)
 
-        return [lower_value_count]*lower_value, [upper_value_count]*upper_value, remainder
+        return [lower_value]*lower_value_count, [upper_value]*upper_value_count, remainder
 
     remainder = deepcopy(incoming_bucket)
     lower_ordered_set = []
