@@ -22,7 +22,7 @@ def sort(incoming_bucket, duplicates=True):
 
         return subset[0], subset[-1], subset[1:-1]
 
-    def crystalize_lower(lower_end, lower_addition):
+    def combine_lower(lower_end, lower_addition):
         if isinstance(lower_addition, List):
             lower_end = lower_end + lower_addition
         else:
@@ -30,7 +30,7 @@ def sort(incoming_bucket, duplicates=True):
 
         return lower_end
 
-    def crystalize_higher(upper_end, upper_addition):
+    def combine_higher(upper_end, upper_addition):
         if isinstance(upper_addition, List):
             upper_end = upper_addition + upper_end
         else:
@@ -39,12 +39,18 @@ def sort(incoming_bucket, duplicates=True):
         return upper_end
 
     def restructure(subset, lower_value, upper_value):
-        lowers = [value for value in subset if (value == lower_value)]
-        remainder = [value for value in subset if (
-            value != lower_value and value != upper_value)]
-        uppers = [value for value in subset if (value == upper_value)]
+        lower_value_count = 0
+        upper_value_count = 0
+        remainder = []
+        for seed in subset:
+            if seed == lower_value:
+                lower_value_count += 1
+            elif seed == upper_value:
+                upper_value_count += 1
+            else:
+                remainder.append(seed)
 
-        return lowers, uppers, remainder
+        return [lower_value_count]*lower_value, [upper_value_count]*upper_value, remainder
 
     remainder = deepcopy(incoming_bucket)
     lower_ordered_set = []
@@ -57,18 +63,18 @@ def sort(incoming_bucket, duplicates=True):
         lower_value, upper_value, remainder = bracket(
             remainder, initial_bracket, lower_value, upper_value)
         initial_bracket = False
-        lower_ordered_set = crystalize_lower(lower_ordered_set, lower_value)
-        upper_ordered_set = crystalize_higher(upper_ordered_set, upper_value)
+        lower_ordered_set = combine_lower(lower_ordered_set, lower_value)
+        upper_ordered_set = combine_higher(upper_ordered_set, upper_value)
         if not duplicates:
             continue
         if lower_value != upper_value:
             lower_addition, upper_addition, remainder = restructure(
                 remainder, lower_value, upper_value)
             if len(lower_addition) > 0:
-                lower_ordered_set = crystalize_lower(
+                lower_ordered_set = combine_lower(
                     lower_ordered_set, lower_addition)
             if len(upper_addition) > 0:
-                upper_ordered_set = crystalize_higher(
+                upper_ordered_set = combine_higher(
                     upper_ordered_set, upper_addition)
         else:
             break
