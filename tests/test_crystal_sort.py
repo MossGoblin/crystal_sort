@@ -3,7 +3,7 @@ from crystal_sort import crystal_sort
 
 
 def test_version():
-    assert __version__ == '0.1.2'
+    assert __version__ == '0.1.3'
 
 def test_sort_flag_false():
     bucket = [3, 5, 7, 1, 5, 9, 8, 4, 6, 2]
