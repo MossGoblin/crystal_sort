@@ -1,10 +1,27 @@
 from copy import deepcopy
 from typing import List
 
+__doc__ = """
+Sorting algorithm for arrays of numeric values
+
+Functions:
+    sort(int[], bool) -> int[]
+"""
+
 
 def sort(incoming_bucket, duplicates=True):
+    '''
+    Sorts an array of numbers
 
-    def bracket(subset, initial_bracket, lower_value, upper_value):
+            Parameters:
+                    incoming_bucket (int[]): An array of integers
+                    dupplicates (bool): Flag for taking duplicate values into account
+                        default: True
+
+            Returns:
+                    result_array (int[]): Sorted array of integers
+    '''
+    def __create_bracket(subset, initial_bracket, lower_value, upper_value):
         search_lower = True
         search_upper = True
         for index in range(0, len(subset)):
@@ -22,7 +39,7 @@ def sort(incoming_bucket, duplicates=True):
 
         return subset[0], subset[-1], subset[1:-1]
 
-    def combine_lower(lower_end, lower_addition):
+    def __combine_lower(lower_end, lower_addition):
         if isinstance(lower_addition, List):
             lower_end = lower_end + lower_addition
         else:
@@ -30,7 +47,7 @@ def sort(incoming_bucket, duplicates=True):
 
         return lower_end
 
-    def combine_higher(upper_end, upper_addition):
+    def __combine_higher(upper_end, upper_addition):
         if isinstance(upper_addition, List):
             upper_end = upper_addition + upper_end
         else:
@@ -38,7 +55,7 @@ def sort(incoming_bucket, duplicates=True):
 
         return upper_end
 
-    def restructure(subset, lower_value, upper_value):
+    def __extract_duplicates(subset, lower_value, upper_value):
         lower_value_count = 0
         upper_value_count = 0
         remainder = []
@@ -60,21 +77,21 @@ def sort(incoming_bucket, duplicates=True):
 
     initial_bracket = True
     while len(remainder) > 1:
-        lower_value, upper_value, remainder = bracket(
+        lower_value, upper_value, remainder = __create_bracket(
             remainder, initial_bracket, lower_value, upper_value)
         initial_bracket = False
-        lower_ordered_set = combine_lower(lower_ordered_set, lower_value)
-        upper_ordered_set = combine_higher(upper_ordered_set, upper_value)
+        lower_ordered_set = __combine_lower(lower_ordered_set, lower_value)
+        upper_ordered_set = __combine_higher(upper_ordered_set, upper_value)
         if not duplicates:
             continue
         if lower_value != upper_value:
-            lower_addition, upper_addition, remainder = restructure(
+            lower_addition, upper_addition, remainder = __extract_duplicates(
                 remainder, lower_value, upper_value)
             if len(lower_addition) > 0:
-                lower_ordered_set = combine_lower(
+                lower_ordered_set = __combine_lower(
                     lower_ordered_set, lower_addition)
             if len(upper_addition) > 0:
-                upper_ordered_set = combine_higher(
+                upper_ordered_set = __combine_higher(
                     upper_ordered_set, upper_addition)
         else:
             break
